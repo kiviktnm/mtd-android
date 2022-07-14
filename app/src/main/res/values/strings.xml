@@ -2,4 +2,8 @@
     <string name="app_name">Mtd</string>
     <string name="title_items_list">Items</string>
     <string name="title_sync">Sync</string>
+    <string name="server_socket_hint">127.0.0.1:55995</string>
+    <string name="server_socket_prompt">Server Socket Address (IP:PORT):</string>
+    <string name="password_prompt">Encryption Password:</string>
+    <string name="password_hint">Input a strong password</string>
 </resources>

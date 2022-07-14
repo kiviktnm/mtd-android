@@ -24,8 +24,8 @@ public class SyncFragment extends Fragment {
         binding = FragmentSyncBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSync;
-        syncViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        final TextView textView = binding.textSync;
+//        syncViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
