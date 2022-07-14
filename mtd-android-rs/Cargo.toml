@@ -1,0 +1,11 @@
+[package]
+name = "mtda"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "mtda"
+crate-type = ["dylib"]
+
+[dependencies]
+jni = "0.19.0"
