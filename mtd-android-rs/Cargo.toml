@@ -9,3 +9,4 @@ crate-type = ["dylib"]
 
 [dependencies]
 jni = "0.19.0"
+mtd = { git = "https://github.com/Windore/mtd" }
