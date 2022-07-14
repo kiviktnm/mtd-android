@@ -6,4 +6,6 @@
     <string name="server_socket_prompt">Server Socket Address (IP:PORT):</string>
     <string name="password_prompt">Encryption Password:</string>
     <string name="password_hint">Input a strong password</string>
+    <string name="shown_weekday_spinner_prompt">Select shown weekday</string>
+    <string name="add_new_item">Add new item</string>
 </resources>
