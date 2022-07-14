@@ -1,16 +1,16 @@
-package com.github.windore.mtd.ui.dashboard;
+package com.github.windore.mtd.ui.items_list;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class ItemsListViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public ItemsListViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is items fragment");
     }
 
     public LiveData<String> getText() {

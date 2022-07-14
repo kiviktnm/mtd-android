@@ -1,4 +1,4 @@
-package com.github.windore.mtd.ui.home;
+package com.github.windore.mtd.ui.items_list;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.github.windore.mtd.databinding.FragmentHomeBinding;
+import com.github.windore.mtd.databinding.FragmentItemsListBinding;
 
-public class HomeFragment extends Fragment {
+public class ItemsListFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentItemsListBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        ItemsListViewModel itemsListViewModel =
+                new ViewModelProvider(this).get(ItemsListViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentItemsListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textItemsList;
+        itemsListViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

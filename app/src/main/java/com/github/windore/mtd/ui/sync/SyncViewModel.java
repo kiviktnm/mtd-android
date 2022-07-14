@@ -1,16 +1,16 @@
-package com.github.windore.mtd.ui.notifications;
+package com.github.windore.mtd.ui.sync;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class SyncViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public SyncViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is sync fragment");
     }
 
     public LiveData<String> getText() {
