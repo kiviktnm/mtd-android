@@ -10,4 +10,11 @@
     <string name="add_new_item">Add new item</string>
     <string name="select_item_weekday">Select weekday</string>
     <string name="item_body_prompt">Input item body</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 </resources>
