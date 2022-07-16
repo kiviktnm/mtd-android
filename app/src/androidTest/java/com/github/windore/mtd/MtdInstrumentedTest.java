@@ -132,4 +132,27 @@ public class MtdInstrumentedTest {
 
         mtd.close();
     }
+
+    @Test
+    public void removeItemRemovesItems() {
+        Mtd mtd = new Mtd();
+
+        mtd.addTodo("Todo", DayOfWeek.MONDAY);
+        mtd.addTask("Task", new DayOfWeek[]{ DayOfWeek.SUNDAY });
+
+        mtd.removeItem(new MtdItem(0, MtdItem.Type.Todo));
+        mtd.removeItem(new MtdItem(0, MtdItem.Type.Task));
+
+        assertEquals(0, mtd.getItemsForWeekday(MtdItem.Type.Todo, DayOfWeek.MONDAY, false).size());
+        assertEquals(0, mtd.getItemsForWeekday(MtdItem.Type.Task, DayOfWeek.SUNDAY, false).size());
+
+        mtd.close();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removingNonExistentThrowsException() {
+        Mtd mtd = new Mtd();
+        mtd.removeItem(new MtdItem(0, MtdItem.Type.Todo));
+        mtd.close();
+    }
 }

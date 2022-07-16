@@ -3,7 +3,7 @@
 use chrono::Weekday;
 use jni::JNIEnv;
 use jni::objects::{JClass, JObject, JString};
-use jni::sys::{jboolean, jbyte, jbyteArray, jlong, jlongArray, jshort, jsize, jstring};
+use jni::sys::{jboolean, jbyte, jbyteArray, jint, jlong, jlongArray, jshort, jsize, jstring};
 
 use mtd::{Task, TdList, Todo, weekday_to_date};
 
@@ -178,6 +178,35 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_addTask(
     }
 
     td_list.add_task(Task::new(body.unwrap().into(), weekdays));
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_github_windore_mtd_Mtd_removeItem(
+    _: JNIEnv,
+    _: JClass,
+    td_list_ptr: jlong,
+    item_type_num: jshort,
+    item_id: jlong
+) -> jint {
+    let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
+    let id = item_id as u64;
+
+    let result;
+
+    match ItemType::from(item_type_num) {
+        ItemType::Todo => {
+            result = td_list.remove_todo(id);
+        }
+        ItemType::Task => {
+            result = td_list.remove_task(id);
+        }
+    }
+
+    if result.is_ok() {
+        0
+    } else {
+        1
+    }
 }
 
 enum ItemType {
