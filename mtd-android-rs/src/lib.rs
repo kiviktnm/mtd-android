@@ -209,6 +209,45 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_removeItem(
     }
 }
 
+#[no_mangle]
+pub extern "system" fn Java_com_github_windore_mtd_Mtd_modifyItemDoneState(
+    _: JNIEnv,
+    _: JClass,
+    td_list_ptr: jlong,
+    item_type_num: jshort,
+    item_id: jlong,
+    done: jboolean,
+    done_weekday_num: jbyte
+) -> jint {
+    let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
+    let id = item_id as u64;
+    let done = done != 0;
+    let weekday = byte_to_weekday(done_weekday_num as u8);
+
+    let mut result = Err(());
+
+    match ItemType::from(item_type_num) {
+        ItemType::Todo => {
+            if let Ok(todo) = td_list.get_todo_mut(id) {
+                todo.set_done(done);
+                result = Ok(());
+            }
+        }
+        ItemType::Task => {
+            if let Ok(task) = td_list.get_task_mut(id) {
+                task.set_done(done, weekday_to_date(weekday));
+                result = Ok(());
+            }
+        }
+    }
+
+    if result.is_ok() {
+        0
+    } else {
+        1
+    }
+}
+
 enum ItemType {
     Todo,
     Task

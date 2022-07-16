@@ -24,6 +24,7 @@ public class Mtd implements AutoCloseable {
     private native void addTodo(long tdListPtr, String body, byte weekdayNum);
     private native void addTask(long tdListPtr, String body, byte[] weekdayNums);
     private native int removeItem(long tdListPtr, short itemTypeNum, long id);
+    private native int modifyItemDoneState(long tdListPtr, short itemTypeNum, long id, boolean isDone, byte weekdayNum);
 
     public Mtd() {
         tdListPtr = newTdList();
@@ -66,6 +67,12 @@ public class Mtd implements AutoCloseable {
 
     public void removeItem(MtdItem item) {
         if (removeItem(tdListPtr, MtdItem.typeToNum(item.getType()), item.getId()) != 0) {
+            throw new IllegalArgumentException("No such item exists.");
+        }
+    }
+
+    public void modifyItemDoneState(MtdItem item, boolean isDone, DayOfWeek weekdayWhenDone) {
+        if (modifyItemDoneState(tdListPtr, MtdItem.typeToNum(item.getType()), item.getId(), isDone, (byte)weekdayWhenDone.getValue()) != 0) {
             throw new IllegalArgumentException("No such item exists.");
         }
     }

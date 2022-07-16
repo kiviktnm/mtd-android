@@ -155,4 +155,75 @@ public class MtdInstrumentedTest {
         mtd.removeItem(new MtdItem(0, MtdItem.Type.Todo));
         mtd.close();
     }
+
+    @Test
+    public void settingTodosDoneAndUndoneWorks() {
+        Mtd mtd = new Mtd();
+
+        mtd.addTodo("Done", DayOfWeek.MONDAY);
+        mtd.addTodo("Done", DayOfWeek.MONDAY);
+        mtd.addTodo("Done", DayOfWeek.MONDAY);
+
+        List<MtdItem> undoneAtStart = mtd.getItemsForWeekday(MtdItem.Type.Todo, DayOfWeek.MONDAY, false);
+
+        assertEquals(3, undoneAtStart.size());
+
+        mtd.modifyItemDoneState(new MtdItem(0, MtdItem.Type.Todo), true, DayOfWeek.MONDAY);
+        mtd.modifyItemDoneState(new MtdItem(1, MtdItem.Type.Todo), true, DayOfWeek.MONDAY);
+        mtd.modifyItemDoneState(new MtdItem(2, MtdItem.Type.Todo), true, DayOfWeek.MONDAY);
+
+        List<MtdItem> allDoneInTheMiddle = mtd.getItemsForWeekday(MtdItem.Type.Todo, DayOfWeek.MONDAY, true);
+
+        assertEquals(3, allDoneInTheMiddle.size());
+
+        mtd.modifyItemDoneState(new MtdItem(1, MtdItem.Type.Todo), false, DayOfWeek.MONDAY);
+
+        List<MtdItem> undoneItemsAtEnd = mtd.getItemsForWeekday(MtdItem.Type.Todo, DayOfWeek.MONDAY, false);
+        List<MtdItem> doneItemsAtEnd = mtd.getItemsForWeekday(MtdItem.Type.Todo, DayOfWeek.MONDAY, true);
+
+        assertEquals(1, undoneItemsAtEnd.size());
+        assertEquals(2, doneItemsAtEnd.size());
+
+        mtd.close();
+    }
+
+    @Test
+    public void settingTasksDoneAndUndoneWorks() {
+        Mtd mtd = new Mtd();
+
+        mtd.addTask("Done", new DayOfWeek[] { DayOfWeek.SUNDAY });
+        mtd.addTask("Done", new DayOfWeek[] { DayOfWeek.SUNDAY });
+        mtd.addTask("Done", new DayOfWeek[] { DayOfWeek.SUNDAY });
+
+        List<MtdItem> undoneAtStart = mtd.getItemsForWeekday(MtdItem.Type.Task, DayOfWeek.SUNDAY, false);
+
+        assertEquals(3, undoneAtStart.size());
+
+        mtd.modifyItemDoneState(new MtdItem(0, MtdItem.Type.Task), true, DayOfWeek.SUNDAY);
+        mtd.modifyItemDoneState(new MtdItem(1, MtdItem.Type.Task), true, DayOfWeek.SUNDAY);
+        mtd.modifyItemDoneState(new MtdItem(2, MtdItem.Type.Task), true, DayOfWeek.SUNDAY);
+
+        List<MtdItem> allDoneInTheMiddle = mtd.getItemsForWeekday(MtdItem.Type.Task, DayOfWeek.SUNDAY, true);
+
+        assertEquals(3, allDoneInTheMiddle.size());
+
+        mtd.modifyItemDoneState(new MtdItem(1, MtdItem.Type.Task), false, DayOfWeek.SUNDAY);
+
+        List<MtdItem> undoneItemsAtEnd = mtd.getItemsForWeekday(MtdItem.Type.Task, DayOfWeek.SUNDAY, false);
+        List<MtdItem> doneItemsAtEnd = mtd.getItemsForWeekday(MtdItem.Type.Task, DayOfWeek.SUNDAY, true);
+
+        assertEquals(1, undoneItemsAtEnd.size());
+        assertEquals(2, doneItemsAtEnd.size());
+
+        mtd.close();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void modifyingNonExistentThrowsException() {
+        Mtd mtd = new Mtd();
+
+        mtd.modifyItemDoneState(new MtdItem(0, MtdItem.Type.Task), false, DayOfWeek.FRIDAY);
+
+        mtd.close();
+    }
 }
