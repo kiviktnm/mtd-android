@@ -249,7 +249,7 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 [[package]]
 name = "mtd"
 version = "0.1.0"
-source = "git+https://github.com/Windore/mtd#0f496551dc06ca848dd74b0f77ebb3d0fcd35bd6"
+source = "git+https://github.com/Windore/mtd#aca732cb0e554614fef2e68f4c9d1c1cadbe4a3a"
 dependencies = [
  "aes-gcm",
  "argon2",
@@ -263,6 +263,7 @@ dependencies = [
 name = "mtda"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "jni",
  "mtd",
 ]
