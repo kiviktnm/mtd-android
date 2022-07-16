@@ -17,6 +17,7 @@ public class Mtd implements AutoCloseable {
 
     private static native long newTdList();
     private static native long newTdListFromJson(String json);
+    private native String toJson(long tdListPtr);
     private native long destroyTdList(long tdListPtr);
 
     private native long[] getItemsForWeekday(long tdListPtr, byte weekdayNum, short itemTypeNum, boolean are_done);
@@ -32,6 +33,10 @@ public class Mtd implements AutoCloseable {
 
     public Mtd(String json) throws IllegalArgumentException {
         tdListPtr = newTdListFromJson(json);
+    }
+
+    public String toJson() {
+        return toJson(tdListPtr);
     }
 
     public List<MtdItem> getItemsForWeekday(MtdItem.Type itemType, DayOfWeek weekday, boolean are_done) {

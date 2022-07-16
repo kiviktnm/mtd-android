@@ -4,10 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import android.content.Context;
-
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -223,6 +220,20 @@ public class MtdInstrumentedTest {
         Mtd mtd = new Mtd();
 
         mtd.modifyItemDoneState(new MtdItem(0, MtdItem.Type.Task), false, DayOfWeek.FRIDAY);
+
+        mtd.close();
+    }
+
+    @Test
+    public void mtdToFromJsonWorks() {
+        String json = "{\"todos\":{\"items\":[{\"body\":\"Todo\",\"date\":\"2022-07-17\",\"id\":0,\"done\":null,\"sync_id\":2346981044091297941,\"state\":\"Unchanged\"}],\"server\":false},\"tasks\":{\"items\":[{\"body\":\"task\",\"weekdays\":[\"Sun\"],\"done_map\":{},\"id\":0,\"state\":\"Unchanged\",\"sync_id\":2130429732854137202}],\"server\":false},\"server\":false}";
+
+        Mtd mtd = new Mtd(json);
+
+        assertEquals("Todo", mtd.getItemBody(new MtdItem(0, MtdItem.Type.Todo)));
+        assertEquals("task", mtd.getItemBody(new MtdItem(0, MtdItem.Type.Task)));
+
+        assertEquals(json, mtd.toJson());
 
         mtd.close();
     }

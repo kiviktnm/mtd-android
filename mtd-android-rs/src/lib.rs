@@ -36,6 +36,19 @@ pub unsafe extern "system" fn Java_com_github_windore_mtd_Mtd_destroyTdList(_: J
 }
 
 #[no_mangle]
+pub extern "system" fn Java_com_github_windore_mtd_Mtd_toJson(env: JNIEnv, _: JClass, td_list_ptr: jlong) -> jstring {
+    let td_list = unsafe { &*(td_list_ptr as *mut TdList) };
+
+    if let Ok(json) = td_list.to_json() {
+        if let Ok(string) = env.new_string(json) {
+            return string.into_inner();
+        }
+    }
+
+    JObject::null().into_inner()
+}
+
+#[no_mangle]
 pub extern "system" fn Java_com_github_windore_mtd_Mtd_getItemsForWeekday(
     env: JNIEnv,
     _: JClass,
