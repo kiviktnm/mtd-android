@@ -28,5 +28,4 @@ public class MainActivityInstrumentedTest {
 
         scenario.onActivity(activity -> assertEquals("Todo", activity.getMtd().getItemBody(new MtdItemRef(0, MtdItemRef.Type.Todo))));
     }
-
 }

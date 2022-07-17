@@ -17,4 +17,9 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="syncing">Synchronizing…</string>
+    <string name="wait_for_sync">Please wait for the sync to finish.</string>
+    <string name="sync_failed">Sync failed</string>
+    <string name="sync_successful">Sync completed!</string>
+    <string name="ok">OK</string>
 </resources>
