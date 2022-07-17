@@ -214,4 +214,18 @@ public class MtdInstrumentedTest {
 
         assertEquals(json, mtd.toJson());
     }
+
+    @Test
+    public void mtdSyncFailsWithInvalidSocketAddress() {
+        Mtd mtd = new Mtd();
+
+        assertEquals("Cannot parse 'notaddress' to a socket address.", mtd.sync("Super secure password", "notaddress"));
+    }
+
+    @Test
+    public void mtdSyncFailsWithoutServer() {
+        Mtd mtd = new Mtd();
+
+        assertEquals("An error occurred while syncing: IO failure: Connection refused (os error 111)", mtd.sync("Super secure password", "127.0.0.1:1234"));
+    }
 }

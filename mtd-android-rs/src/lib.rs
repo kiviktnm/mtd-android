@@ -1,11 +1,12 @@
 #![allow(non_snake_case)]
 
+use std::net::SocketAddr;
 use chrono::Weekday;
 use jni::JNIEnv;
 use jni::objects::{JClass, JObject, JString};
 use jni::sys::{jboolean, jbyte, jbyteArray, jint, jlong, jlongArray, jshort, jsize, jstring};
 
-use mtd::{Task, TdList, Todo, weekday_to_date};
+use mtd::{Config, MtdNetMgr, Task, TdList, Todo, weekday_to_date};
 
 #[no_mangle]
 pub extern "system" fn Java_com_github_windore_mtd_Mtd_newTdList(_: JNIEnv, _: JClass) -> jlong {
@@ -258,6 +259,56 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_modifyItemDoneState(
         0
     } else {
         1
+    }
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_github_windore_mtd_Mtd_sync(
+    env: JNIEnv,
+    _: JClass,
+    td_list_ptr: jlong,
+    password: jbyteArray,
+    socket_addr: JString
+) -> jstring {
+    let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
+
+    if let Ok(js) = env.new_string(sync(env, td_list, password, socket_addr)) {
+        js.into_inner()
+    } else {
+        JObject::null().into_inner()
+    }
+}
+
+// Sync returns an empty string on success and a string containing an error message on failure.
+fn sync(env: JNIEnv, list: &mut TdList, password: jbyteArray, socket_addr: JString) -> String {
+    let password = env.convert_byte_array(password);
+    let socket_addr = env.get_string(socket_addr);
+
+    if let Err(e) = password {
+        env.throw_new("java/lang/IllegalArgumentException", format!("Invalid password byte array: {:?}.", e)).unwrap();
+        return "Error".to_string();
+    }
+
+    if let Err(e) = socket_addr {
+        env.throw_new("java/lang/IllegalArgumentException", format!("Invalid socket address string: {:?}.", e)).unwrap();
+        return "Error".to_string();
+    }
+
+    let password = password.unwrap();
+    let socket_addr: String = socket_addr.unwrap().into();
+
+    return if let Ok(valid_socket_addr) = socket_addr.parse::<SocketAddr>() {
+        let conf = Config::new_default(password, valid_socket_addr, None);
+
+        let mut sync_mgr = MtdNetMgr::new(list, &conf);
+
+        if let Err(e) = sync_mgr.client_sync() {
+            format!("An error occurred while syncing: {}", e)
+        } else {
+            "".to_string()
+        }
+    } else {
+        format!("Cannot parse '{}' to a socket address.", socket_addr)
     }
 }
 

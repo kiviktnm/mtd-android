@@ -25,24 +25,17 @@ public class Mtd extends Observable {
     }
 
     private static native long newTdList();
-
     private static native long newTdListFromJson(String json);
-
     private native String toJson(long tdListPtr);
 
     private native long destroyTdList(long tdListPtr);
-
     private native long[] getItemsForWeekday(long tdListPtr, byte weekdayNum, short itemTypeNum, boolean are_done);
-
     private native String getItemBody(long tdListPtr, short itemTypeNum, long id);
-
     private native void addTodo(long tdListPtr, String body, byte weekdayNum);
-
     private native void addTask(long tdListPtr, String body, byte[] weekdayNums);
-
     private native int removeItem(long tdListPtr, short itemTypeNum, long id);
-
     private native int modifyItemDoneState(long tdListPtr, short itemTypeNum, long id, boolean isDone, byte weekdayNum);
+    private native String sync(long tdListPtr, byte[] encryption_password, String socketAddress);
 
     public String toJson() {
         return toJson(tdListPtr);
@@ -101,6 +94,22 @@ public class Mtd extends Observable {
 
         setChanged();
         notifyObservers();
+    }
+
+    /**
+     * Returns an empty string on success. Otherwise returns a string containing an user facing
+     * Error message.
+     */
+    public String sync(String encryptionPassword, String socketAddress) {
+        String result = sync(tdListPtr, encryptionPassword.getBytes(), socketAddress);
+
+        // When sync is unsuccessful mtd should remain unchanged.
+        if (result.isEmpty()) {
+            setChanged();
+            notifyObservers();
+        }
+
+        return result;
     }
 
     @Override
