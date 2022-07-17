@@ -39,7 +39,7 @@ android {
 apply plugin: 'org.mozilla.rust-android-gradle.rust-android'
 
 cargo {
-    module  = "../mtd-android-rs"
+    module = "../mtd-android-rs"
     profile = "release"
     libname = "mtda"
     targets = ["arm", "x86"]

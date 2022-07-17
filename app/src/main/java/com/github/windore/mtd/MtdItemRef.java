@@ -1,25 +1,11 @@
 package com.github.windore.mtd;
 
-public class MtdItem {
-    public enum Type {
-        Todo,
-        Task,
-    }
-
+public class MtdItemRef {
     private final long id;
     private final Type type;
-
-    MtdItem(long id, Type type) {
+    MtdItemRef(long id, Type type) {
         this.id = id;
         this.type = type;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public Type getType() {
-        return type;
     }
 
     public static short typeToNum(Type type) {
@@ -31,5 +17,18 @@ public class MtdItem {
             default:
                 return -1;
         }
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public enum Type {
+        Todo,
+        Task,
     }
 }
