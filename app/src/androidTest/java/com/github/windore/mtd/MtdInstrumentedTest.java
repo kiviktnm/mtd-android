@@ -19,33 +19,30 @@ public class MtdInstrumentedTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void invalidJsonThrowsException() {
-        new Mtd("invalid json").close();
+        new Mtd("invalid json");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void nullJsonThrowsException() {
-        new Mtd(null).close();
+        new Mtd(null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void nullTodoBodyThrowsException() {
         Mtd mtd = new Mtd();
         mtd.addTodo(null, DayOfWeek.MONDAY);
-        mtd.close();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void nullTaskBodyThrowsException() {
         Mtd mtd = new Mtd();
         mtd.addTask(null, new DayOfWeek[] { DayOfWeek.MONDAY });
-        mtd.close();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void emptyTaskWeekdayListThrowsException() {
         Mtd mtd = new Mtd();
         mtd.addTask("Task", new DayOfWeek[] {});
-        mtd.close();
     }
 
     @Test
@@ -53,7 +50,6 @@ public class MtdInstrumentedTest {
         Mtd mtd = new Mtd();
         assertNull(mtd.getItemBody(MtdItem.Type.Todo, 0));
         assertNull(mtd.getItemBody(MtdItem.Type.Task, 0));
-        mtd.close();
     }
 
     @Test
@@ -64,8 +60,6 @@ public class MtdInstrumentedTest {
 
         assertEquals("Todo 1", mtd.getItemBody(MtdItem.Type.Todo, 0));
         assertEquals("Task 1", mtd.getItemBody(MtdItem.Type.Task, 0));
-
-        mtd.close();
     }
 
     @Test
@@ -76,8 +70,6 @@ public class MtdInstrumentedTest {
         assertTrue(mtd.getItemsForWeekday(MtdItem.Type.Todo, DayOfWeek.MONDAY, false).isEmpty());
         assertTrue(mtd.getItemsForWeekday(MtdItem.Type.Task, DayOfWeek.MONDAY, true).isEmpty());
         assertTrue(mtd.getItemsForWeekday(MtdItem.Type.Task, DayOfWeek.MONDAY, false).isEmpty());
-
-        mtd.close();
     }
 
     @Test
@@ -101,8 +93,6 @@ public class MtdInstrumentedTest {
         for (MtdItem tuesday : tuesdaysItems) {
             assertEquals("Tuesday", mtd.getItemBody(tuesday.getType(), tuesday.getId()));
         }
-
-        mtd.close();
     }
 
     @Test
@@ -126,8 +116,6 @@ public class MtdInstrumentedTest {
         for (MtdItem item : sundayItems) {
             assertEquals("Sunday", mtd.getItemBody(item.getType(), item.getId()));
         }
-
-        mtd.close();
     }
 
     @Test
@@ -142,15 +130,12 @@ public class MtdInstrumentedTest {
 
         assertEquals(0, mtd.getItemsForWeekday(MtdItem.Type.Todo, DayOfWeek.MONDAY, false).size());
         assertEquals(0, mtd.getItemsForWeekday(MtdItem.Type.Task, DayOfWeek.SUNDAY, false).size());
-
-        mtd.close();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void removingNonExistentThrowsException() {
         Mtd mtd = new Mtd();
         mtd.removeItem(new MtdItem(0, MtdItem.Type.Todo));
-        mtd.close();
     }
 
     @Test
@@ -180,8 +165,6 @@ public class MtdInstrumentedTest {
 
         assertEquals(1, undoneItemsAtEnd.size());
         assertEquals(2, doneItemsAtEnd.size());
-
-        mtd.close();
     }
 
     @Test
@@ -211,8 +194,6 @@ public class MtdInstrumentedTest {
 
         assertEquals(1, undoneItemsAtEnd.size());
         assertEquals(2, doneItemsAtEnd.size());
-
-        mtd.close();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -220,8 +201,6 @@ public class MtdInstrumentedTest {
         Mtd mtd = new Mtd();
 
         mtd.modifyItemDoneState(new MtdItem(0, MtdItem.Type.Task), false, DayOfWeek.FRIDAY);
-
-        mtd.close();
     }
 
     @Test
@@ -234,7 +213,5 @@ public class MtdInstrumentedTest {
         assertEquals("task", mtd.getItemBody(new MtdItem(0, MtdItem.Type.Task)));
 
         assertEquals(json, mtd.toJson());
-
-        mtd.close();
     }
 }

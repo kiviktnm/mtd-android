@@ -5,9 +5,10 @@ import androidx.annotation.Nullable;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.stream.Stream;
 
-public class Mtd implements AutoCloseable {
+public class Mtd extends Observable {
 
     private final long tdListPtr;
 
@@ -59,6 +60,9 @@ public class Mtd implements AutoCloseable {
 
     public void addTodo(String body, DayOfWeek weekday) {
         addTodo(tdListPtr, body, (byte)weekday.getValue());
+
+        setChanged();
+        notifyObservers();
     }
 
     public void addTask(String body, DayOfWeek[] weekdays) {
@@ -68,22 +72,31 @@ public class Mtd implements AutoCloseable {
             weekdayNums[i] = weekdayNumsB[i];
         }
         addTask(tdListPtr, body, weekdayNums);
+
+        setChanged();
+        notifyObservers();
     }
 
     public void removeItem(MtdItem item) {
         if (removeItem(tdListPtr, MtdItem.typeToNum(item.getType()), item.getId()) != 0) {
             throw new IllegalArgumentException("No such item exists.");
         }
+
+        setChanged();
+        notifyObservers();
     }
 
     public void modifyItemDoneState(MtdItem item, boolean isDone, DayOfWeek weekdayWhenDone) {
         if (modifyItemDoneState(tdListPtr, MtdItem.typeToNum(item.getType()), item.getId(), isDone, (byte)weekdayWhenDone.getValue()) != 0) {
             throw new IllegalArgumentException("No such item exists.");
         }
+
+        setChanged();
+        notifyObservers();
     }
 
     @Override
-    public void close() {
+    protected void finalize() {
         destroyTdList(tdListPtr);
     }
 }
