@@ -2,7 +2,6 @@ package com.github.windore.mtd.ui.items_list;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +39,7 @@ public class ItemsListFragment extends Fragment implements AdapterView.OnItemSel
                              ViewGroup container, Bundle savedInstanceState) {
         itemsListViewModel = new ViewModelProvider(this).get(ItemsListViewModel.class);
         binding = FragmentItemsListBinding.inflate(inflater, container, false);
-        mtd = ((MainActivity)requireActivity()).getMtd();
+        mtd = ((MainActivity) requireActivity()).getMtd();
 
         return binding.getRoot();
     }
@@ -68,11 +67,9 @@ public class ItemsListFragment extends Fragment implements AdapterView.OnItemSel
             itemsRecyclerView.swapAdapter(newItemsAdapter, false);
         });
 
-        mtd.addObserver((__,___) -> updateShownItems());
+        mtd.addObserver((__, ___) -> updateShownItems());
 
-        binding.btnAddItem.setOnClickListener(view1 -> {
-            addNewItem(requireActivity());
-        });
+        binding.btnAddItem.setOnClickListener(view1 -> addNewItem(requireActivity()));
     }
 
     private void updateShownItems() {
@@ -197,5 +194,6 @@ public class ItemsListFragment extends Fragment implements AdapterView.OnItemSel
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {}
+    public void onNothingSelected(AdapterView<?> adapterView) {
+    }
 }

@@ -3,6 +3,7 @@ package com.github.windore.mtd;
 public class MtdItemRef {
     private final long id;
     private final Type type;
+
     MtdItemRef(long id, Type type) {
         this.id = id;
         this.type = type;

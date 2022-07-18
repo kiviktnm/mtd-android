@@ -21,6 +21,14 @@ public class ShownItem {
         header = null;
     }
 
+    public static List<ShownItem> createFromMtdItems(List<MtdItemRef> items) {
+        ArrayList<ShownItem> shownItems = new ArrayList<>();
+        for (MtdItemRef item : items) {
+            shownItems.add(new ShownItem(item));
+        }
+        return shownItems;
+    }
+
     public boolean isHeader() {
         return header != null;
     }
@@ -33,13 +41,5 @@ public class ShownItem {
     @Nullable
     public MtdItemRef getItem() {
         return item;
-    }
-
-    public static List<ShownItem> createFromMtdItems(List<MtdItemRef> items) {
-        ArrayList<ShownItem> shownItems = new ArrayList<>();
-        for (MtdItemRef item : items) {
-            shownItems.add(new ShownItem(item));
-        }
-        return shownItems;
     }
 }

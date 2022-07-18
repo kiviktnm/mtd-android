@@ -25,17 +25,27 @@ public class Mtd extends Observable {
     }
 
     private static native long newTdList();
+
     private static native long newTdListFromJson(String json);
+
     private native String toJson(long tdListPtr);
 
-    private native long destroyTdList(long tdListPtr);
+    private native void destroyTdList(long tdListPtr);
+
     private native long[] getItemsForWeekday(long tdListPtr, byte weekdayNum, short itemTypeNum, boolean are_done);
+
     private native boolean isItemDone(long tdListPtr, short itemTypeNum, long id, byte weekdayNum);
+
     private native String getItemBody(long tdListPtr, short itemTypeNum, long id);
+
     private native void addTodo(long tdListPtr, String body, byte weekdayNum);
+
     private native void addTask(long tdListPtr, String body, byte[] weekdayNums);
+
     private native int removeItem(long tdListPtr, short itemTypeNum, long id);
+
     private native int modifyItemDoneState(long tdListPtr, short itemTypeNum, long id, boolean isDone, byte weekdayNum);
+
     private native String sync(long tdListPtr, byte[] encryption_password, String socketAddress);
 
     public String toJson() {

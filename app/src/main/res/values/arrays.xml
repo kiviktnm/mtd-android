@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="weekdays" >
+    <string-array name="weekdays">
         <item>@string/monday</item>
         <item>@string/tuesday</item>
         <item>@string/wednesday</item>
@@ -9,7 +9,7 @@
         <item>@string/saturday</item>
         <item>@string/sunday</item>
     </string-array>
-    <string-array name="item_types" >
+    <string-array name="item_types">
         <item>@string/todo</item>
         <item>@string/task</item>
     </string-array>

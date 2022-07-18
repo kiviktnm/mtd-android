@@ -1,11 +1,11 @@
 #![allow(non_snake_case)]
 
 use std::net::SocketAddr;
+
 use chrono::Weekday;
 use jni::JNIEnv;
 use jni::objects::{JClass, JObject, JString};
 use jni::sys::{jboolean, jbyte, jbyteArray, jint, jlong, jlongArray, jshort, jsize, jstring};
-
 use mtd::{Config, MtdNetMgr, Task, TdList, Todo, weekday_to_date};
 
 #[no_mangle]
@@ -56,7 +56,7 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_getItemsForWeekday(
     td_list_ptr: jlong,
     weekday_num: jbyte,
     item_type_num: jshort,
-    are_done: jboolean
+    are_done: jboolean,
 ) -> jlongArray {
     let td_list = unsafe { &*(td_list_ptr as *mut TdList) };
     let weekday = byte_to_weekday(weekday_num as u8);
@@ -99,7 +99,6 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_getItemsForWeekday(
         // in Java side
         JObject::null().into_inner()
     }
-
 }
 
 #[no_mangle]
@@ -108,7 +107,7 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_getItemBody(
     _: JClass,
     td_list_ptr: jlong,
     item_type_num: jshort,
-    item_id: jlong
+    item_id: jlong,
 ) -> jstring {
     // Borrow as mut bcs there is no get_todo/task without mut
     let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
@@ -146,7 +145,7 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_isItemDone(
     td_list_ptr: jlong,
     item_type_num: jshort,
     item_id: jlong,
-    weekday_num: jbyte
+    weekday_num: jbyte,
 ) -> jboolean {
     // Borrow as mut bcs there is no get_todo/task without mut
     let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
@@ -178,7 +177,7 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_addTodo(
     _: JClass,
     td_list_ptr: jlong,
     body: JString,
-    weekday_num: jbyte
+    weekday_num: jbyte,
 ) {
     let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
     let weekday = byte_to_weekday(weekday_num as u8);
@@ -196,7 +195,7 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_addTask(
     _: JClass,
     td_list_ptr: jlong,
     body: JString,
-    weekday_nums: jbyteArray
+    weekday_nums: jbyteArray,
 ) {
     let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
 
@@ -233,7 +232,7 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_removeItem(
     _: JClass,
     td_list_ptr: jlong,
     item_type_num: jshort,
-    item_id: jlong
+    item_id: jlong,
 ) -> jint {
     let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
     let id = item_id as u64;
@@ -264,7 +263,7 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_modifyItemDoneState(
     item_type_num: jshort,
     item_id: jlong,
     done: jboolean,
-    done_weekday_num: jbyte
+    done_weekday_num: jbyte,
 ) -> jint {
     let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
     let id = item_id as u64;
@@ -301,7 +300,7 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_sync(
     _: JClass,
     td_list_ptr: jlong,
     password: jbyteArray,
-    socket_addr: JString
+    socket_addr: JString,
 ) -> jstring {
     let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
 
@@ -342,12 +341,12 @@ fn sync(env: JNIEnv, list: &mut TdList, password: jbyteArray, socket_addr: JStri
         }
     } else {
         format!("Cannot parse '{}' to a socket address.", socket_addr)
-    }
+    };
 }
 
 enum ItemType {
     Todo,
-    Task
+    Task,
 }
 
 impl From<jshort> for ItemType {

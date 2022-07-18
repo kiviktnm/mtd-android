@@ -40,7 +40,7 @@ public class SyncFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         Context context = getContext();
-        if (context != null){
+        if (context != null) {
             SharedPreferences preferences = context.getSharedPreferences("sync", Context.MODE_PRIVATE);
             binding.editTextPassword.setText(preferences.getString("password", ""));
             binding.editTextServerAddress.setText(preferences.getString("socketAddr", ""));
@@ -107,10 +107,12 @@ public class SyncFragment extends Fragment {
         }
 
         @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
         @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
 
         @Override
         public void afterTextChanged(Editable editable) {

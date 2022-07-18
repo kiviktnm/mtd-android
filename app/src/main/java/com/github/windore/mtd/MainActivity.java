@@ -20,13 +20,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.time.DayOfWeek;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MtdApp";
     private static final String FILENAME = "items.json";
 
-    private ActivityMainBinding binding;
     private Mtd mtd;
 
     @Override
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         mtd.addObserver((__, ___) -> writeFile(mtd.toJson()));
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.github.windore.mtd.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);

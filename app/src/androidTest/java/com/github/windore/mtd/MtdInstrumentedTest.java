@@ -209,7 +209,7 @@ public class MtdInstrumentedTest {
         Mtd mtd = new Mtd();
 
         mtd.addTodo("Todo", DayOfWeek.MONDAY);
-        mtd.addTask("Task", new DayOfWeek[] { DayOfWeek.MONDAY });
+        mtd.addTask("Task", new DayOfWeek[]{DayOfWeek.MONDAY});
 
         assertFalse(mtd.isItemDone(new MtdItemRef(0, MtdItemRef.Type.Todo), DayOfWeek.MONDAY));
         assertFalse(mtd.isItemDone(new MtdItemRef(0, MtdItemRef.Type.Task), DayOfWeek.MONDAY));
