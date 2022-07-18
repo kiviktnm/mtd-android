@@ -22,4 +22,7 @@
     <string name="sync_failed">Sync failed</string>
     <string name="sync_successful">Sync completed!</string>
     <string name="ok">OK</string>
+    <string name="remove_item">Remove item</string>
+    <string name="remove_confirm">Are you sure you want to remove the item?</string>
+    <string name="cancel">Cancel</string>
 </resources>
