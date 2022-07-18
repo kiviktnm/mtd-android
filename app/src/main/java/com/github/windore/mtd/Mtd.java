@@ -30,7 +30,7 @@ public class Mtd extends Observable {
 
     private native long destroyTdList(long tdListPtr);
     private native long[] getItemsForWeekday(long tdListPtr, byte weekdayNum, short itemTypeNum, boolean are_done);
-    //private native boolean isItemDone(long tdListPtr, short itemTypeNum, long id);
+    private native boolean isItemDone(long tdListPtr, short itemTypeNum, long id, byte weekdayNum);
     private native String getItemBody(long tdListPtr, short itemTypeNum, long id);
     private native void addTodo(long tdListPtr, String body, byte weekdayNum);
     private native void addTask(long tdListPtr, String body, byte[] weekdayNums);
@@ -50,9 +50,8 @@ public class Mtd extends Observable {
         return list;
     }
 
-    public boolean isItemDone(MtdItemRef item) {
-        return false;
-        //return isItemDone(tdListPtr, MtdItemRef.typeToNum(item.getType()), item.getId());
+    public boolean isItemDone(MtdItemRef item, DayOfWeek weekday) {
+        return isItemDone(tdListPtr, MtdItemRef.typeToNum(item.getType()), item.getId(), (byte) weekday.getValue());
     }
 
     @Nullable

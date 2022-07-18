@@ -1,6 +1,7 @@
 package com.github.windore.mtd;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -201,6 +202,23 @@ public class MtdInstrumentedTest {
         Mtd mtd = new Mtd();
 
         mtd.modifyItemDoneState(new MtdItemRef(0, MtdItemRef.Type.Task), false, DayOfWeek.FRIDAY);
+    }
+
+    @Test
+    public void modifyItemStateModifiesState() {
+        Mtd mtd = new Mtd();
+
+        mtd.addTodo("Todo", DayOfWeek.MONDAY);
+        mtd.addTask("Task", new DayOfWeek[] { DayOfWeek.MONDAY });
+
+        assertFalse(mtd.isItemDone(new MtdItemRef(0, MtdItemRef.Type.Todo), DayOfWeek.MONDAY));
+        assertFalse(mtd.isItemDone(new MtdItemRef(0, MtdItemRef.Type.Task), DayOfWeek.MONDAY));
+
+        mtd.modifyItemDoneState(new MtdItemRef(0, MtdItemRef.Type.Todo), true, DayOfWeek.MONDAY);
+        mtd.modifyItemDoneState(new MtdItemRef(0, MtdItemRef.Type.Task), true, DayOfWeek.MONDAY);
+
+        assertTrue(mtd.isItemDone(new MtdItemRef(0, MtdItemRef.Type.Todo), DayOfWeek.MONDAY));
+        assertTrue(mtd.isItemDone(new MtdItemRef(0, MtdItemRef.Type.Task), DayOfWeek.MONDAY));
     }
 
     @Test

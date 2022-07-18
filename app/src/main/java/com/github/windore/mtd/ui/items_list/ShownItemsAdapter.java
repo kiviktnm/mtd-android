@@ -91,7 +91,7 @@ public class ShownItemsAdapter extends RecyclerView.Adapter<ShownItemsAdapter.Vi
             doneCheckBox.setVisibility(View.VISIBLE);
 
             // Do these before setting item/mtd to non null to avoid unnecessary listener callbacks
-            doneCheckBox.setChecked(mtd.isItemDone(item));
+            doneCheckBox.setChecked(mtd.isItemDone(item, selectedWeekday));
             textView.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
             textView.setText(mtd.getItemBody(item));
 

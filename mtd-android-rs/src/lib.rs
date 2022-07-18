@@ -140,6 +140,39 @@ pub extern "system" fn Java_com_github_windore_mtd_Mtd_getItemBody(
 }
 
 #[no_mangle]
+pub extern "system" fn Java_com_github_windore_mtd_Mtd_isItemDone(
+    _: JNIEnv,
+    _: JClass,
+    td_list_ptr: jlong,
+    item_type_num: jshort,
+    item_id: jlong,
+    weekday_num: jbyte
+) -> jboolean {
+    // Borrow as mut bcs there is no get_todo/task without mut
+    let td_list = unsafe { &mut *(td_list_ptr as *mut TdList) };
+    let item_type = ItemType::from(item_type_num);
+    let id = item_id as u64;
+    let date = weekday_to_date(byte_to_weekday(weekday_num as u8));
+
+    return match item_type {
+        ItemType::Todo => {
+            if let Ok(todo) = td_list.get_todo_mut(id) {
+                todo.done()
+            } else {
+                false
+            }
+        }
+        ItemType::Task => {
+            if let Ok(task) = td_list.get_task_mut(id) {
+                task.done(date)
+            } else {
+                false
+            }
+        }
+    } as jboolean;
+}
+
+#[no_mangle]
 pub extern "system" fn Java_com_github_windore_mtd_Mtd_addTodo(
     env: JNIEnv,
     _: JClass,
