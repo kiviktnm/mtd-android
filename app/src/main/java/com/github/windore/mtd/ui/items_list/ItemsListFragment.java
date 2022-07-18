@@ -1,11 +1,16 @@
 package com.github.windore.mtd.ui.items_list;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -64,6 +69,10 @@ public class ItemsListFragment extends Fragment implements AdapterView.OnItemSel
         });
 
         mtd.addObserver((__,___) -> updateShownItems());
+
+        binding.btnAddItem.setOnClickListener(view1 -> {
+            addNewItem(requireActivity());
+        });
     }
 
     private void updateShownItems() {
@@ -87,6 +96,93 @@ public class ItemsListFragment extends Fragment implements AdapterView.OnItemSel
             items.add(new ShownItem(""));
             itemsListViewModel.setShownItems(items.toArray(new ShownItem[]{}));
         }
+    }
+
+    private void addNewItem(Activity activity) {
+        new AlertDialog.Builder(activity)
+                .setTitle(R.string.select_item_type_prompt)
+                .setItems(R.array.item_types, (dialogInterface, which) -> {
+                    if (which == 0) {
+                        addNewTodo(activity);
+                    } else {
+                        addNewTask(activity);
+                    }
+                    dialogInterface.dismiss();
+                })
+                .create()
+                .show();
+    }
+
+    private void addNewTodo(Activity activity) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.dialog_todo, null, false);
+        Spinner weekdaySpinner = layout.findViewById(R.id.spinner_weekday);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                activity,
+                R.array.weekdays,
+                android.R.layout.simple_spinner_dropdown_item
+        );
+        weekdaySpinner.setAdapter(adapter);
+        weekdaySpinner.setSelection(DayOfWeek.from(LocalDate.now()).getValue() - 1);
+
+        new AlertDialog.Builder(activity)
+                .setTitle(R.string.add_new_todo)
+                .setView(layout)
+                .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                    AlertDialog dialog = (AlertDialog) dialogInterface;
+                    EditText bodyET = dialog.findViewById(R.id.edit_text_body);
+                    DayOfWeek weekday = DayOfWeek.of(weekdaySpinner.getSelectedItemPosition() + 1);
+                    mtd.addTodo(bodyET.getText().toString(), weekday);
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
+                .create()
+                .show();
+    }
+
+    private void addNewTask(Activity activity) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+
+        View layout = inflater.inflate(R.layout.dialog_task, null, false);
+
+        // Ton of repetition here, would probably be good to check into alternatives that reduce
+        // repetition. For now this is fine.
+        CheckBox monCB = layout.findViewById(R.id.check_box_mon);
+        CheckBox tueCB = layout.findViewById(R.id.check_box_tue);
+        CheckBox wedCB = layout.findViewById(R.id.check_box_wed);
+        CheckBox thuCB = layout.findViewById(R.id.check_box_thu);
+        CheckBox friCB = layout.findViewById(R.id.check_box_fri);
+        CheckBox satCB = layout.findViewById(R.id.check_box_sat);
+        CheckBox sunCB = layout.findViewById(R.id.check_box_sun);
+
+        new AlertDialog.Builder(activity)
+                .setTitle(R.string.add_new_task)
+                .setView(layout)
+                .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                    AlertDialog dialog = (AlertDialog) dialogInterface;
+                    EditText bodyET = dialog.findViewById(R.id.edit_text_body);
+
+                    ArrayList<DayOfWeek> weekdays = new ArrayList<>();
+                    if (monCB.isChecked()) weekdays.add(DayOfWeek.MONDAY);
+                    if (tueCB.isChecked()) weekdays.add(DayOfWeek.TUESDAY);
+                    if (wedCB.isChecked()) weekdays.add(DayOfWeek.WEDNESDAY);
+                    if (thuCB.isChecked()) weekdays.add(DayOfWeek.THURSDAY);
+                    if (friCB.isChecked()) weekdays.add(DayOfWeek.FRIDAY);
+                    if (satCB.isChecked()) weekdays.add(DayOfWeek.SATURDAY);
+                    if (sunCB.isChecked()) weekdays.add(DayOfWeek.SUNDAY);
+
+                    // At least one weekday must be selected. Select the current weekday by default.
+                    if (weekdays.size() == 0) {
+                        weekdays.add(DayOfWeek.from(LocalDate.now()));
+                    }
+
+                    mtd.addTask(bodyET.getText().toString(), weekdays.toArray(new DayOfWeek[]{}));
+                    dialog.dismiss();
+                })
+                .setNegativeButton(R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss())
+                .create()
+                .show();
     }
 
     @Override
