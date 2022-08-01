@@ -54,9 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Button licensesBtn = (Button) findViewById(R.id.licenses_btn);
-        licensesBtn.setOnClickListener(view -> {
-            startActivity(new Intent(this, OssLicensesMenuActivity.class));
-        });
+        licensesBtn.setOnClickListener(view -> startActivity(new Intent(this, LicensesActivity.class)));
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each

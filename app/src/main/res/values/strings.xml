@@ -31,4 +31,7 @@
     <string name="add_new_todo">Add new todo</string>
     <string name="add_new_task">Add new task</string>
     <string name="licenses">Licenses</string>
+    <string name="rust_licenses">3rd Party Rust Licenses</string>
+    <string name="android_licenses">3rd Party Android Licenses</string>
+    <string name="app_license">"Copyright © 2022 Windore\n\nMtd is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nMtd is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.\n\nYou should have received a copy of the GNU General Public License along with this program. If not, see https://www.gnu.org/licenses/."</string>
 </resources>
