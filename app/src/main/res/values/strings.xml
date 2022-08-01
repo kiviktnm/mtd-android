@@ -30,4 +30,5 @@
     <string name="task">Task</string>
     <string name="add_new_todo">Add new todo</string>
     <string name="add_new_task">Add new task</string>
+    <string name="licenses">Licenses</string>
 </resources>
