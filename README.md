@@ -12,7 +12,7 @@ For more information about mtd see the [CLI app](https://github.com/Windore/mtd)
 
 ## Installation
 
-I will release an APK file soon.
+Install mtd with the [latest APK file](https://github.com/Windore/mtd-android/releases/latest).
 
 ## License
 
