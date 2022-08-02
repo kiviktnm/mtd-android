@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 
-use std::net::SocketAddr;
+use std::net::{SocketAddr, ToSocketAddrs};
 
 use chrono::Weekday;
 use jni::JNIEnv;
@@ -329,8 +329,8 @@ fn sync(env: JNIEnv, list: &mut TdList, password: jbyteArray, socket_addr: JStri
     let password = password.unwrap();
     let socket_addr: String = socket_addr.unwrap().into();
 
-    return if let Ok(valid_socket_addr) = socket_addr.parse::<SocketAddr>() {
-        let conf = Config::new_default(password, valid_socket_addr, None);
+    return if socket_addr.to_socket_addrs().is_ok() {
+        let conf = Config::new_default(password, socket_addr, None);
 
         let mut sync_mgr = MtdNetMgr::new(list, &conf);
 
