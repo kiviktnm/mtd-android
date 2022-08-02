@@ -3,6 +3,8 @@
 An Android client for mtd, a todo and task management app with built-in encrypted synchronization
 support. See the [CLI app](https://github.com/Windore/mtd) too.
 
+![mtd-android](https://user-images.githubusercontent.com/65563192/182473604-93a40b37-40ea-4b76-a7e6-57f3b61207ad.png)
+
 Mtd is a yet another todo app as enough of those don't exist yet. However, mtd has some benefits
 over the existing apps, mtd has built-in synchronization, it's lightweight and has both a
 [CLI](https://github.com/Windore/mtd) and an [Android](https://github.com/Windore/mtd-android) version. As
