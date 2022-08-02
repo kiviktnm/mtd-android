@@ -19,6 +19,9 @@ public class LicensesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
 
+        Button rustLicensesBtn = (Button) findViewById(R.id.rust_licenses_btn);
+        rustLicensesBtn.setOnClickListener(view -> startActivity(new Intent(this, RustLicensesActivity.class)));
+
         Button licensesBtn = (Button) findViewById(R.id.android_licenses_btn);
         licensesBtn.setOnClickListener(view -> startActivity(new Intent(this, OssLicensesMenuActivity.class)));
     }

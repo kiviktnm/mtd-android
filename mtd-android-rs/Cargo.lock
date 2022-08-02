@@ -260,7 +260,7 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 [[package]]
 name = "mtd"
 version = "0.1.0"
-source = "git+https://github.com/Windore/mtd#94fa685a535881892f6d8c549950837f2929ef3d"
+source = "git+https://github.com/Windore/mtd#c87eab4f3f1a53dbf0dca899e87dd4829c76cdcc"
 dependencies = [
  "aes-gcm",
  "argon2",

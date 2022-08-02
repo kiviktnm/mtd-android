@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/drawable/ic_sync_24.xml" value="0.1595" />
         <entry key="app/src/main/res/layout/activity_licenses.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_rust_licenses.xml" value="0.17882472137791286" />
         <entry key="app/src/main/res/layout/dialog_task.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/layout/dialog_todo.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/layout/fragment_items_list.xml" value="0.3541666666666667" />

@@ -1,0 +1,12 @@
+accepted = [
+    "Apache-2.0",
+    "MIT",
+    "BSD-3-Clause",
+    "GPL-3.0",
+    "Unicode-DFS-2016",
+]
+
+targets = [
+    "armv7-linux-androideabi",
+    "i686-linux-android",
+]
