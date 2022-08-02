@@ -5,7 +5,7 @@ support. See the [CLI app](https://github.com/Windore/mtd) too.
 
 Mtd is a yet another todo app as enough of those don't exist yet. However, mtd has some benefits
 over the existing apps, mtd has built-in synchronization, it's lightweight and has both a
-[CLI](https://github.com/Windore/mtd) and an [Android](https://github.com/Windore/mtd) version. As
+[CLI](https://github.com/Windore/mtd) and an [Android](https://github.com/Windore/mtd-android) version. As
 for security, all network transmissions for synchronization are encrypted using AES GCM.
 
 For more information about mtd see the [CLI app](https://github.com/Windore/mtd).
